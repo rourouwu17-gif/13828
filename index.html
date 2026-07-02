@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>售價計算器</title>
+    <title>售價計算器 (RMB 轉 TWD)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -38,6 +38,7 @@
             color: #666;
             text-align: center;
             margin-bottom: 20px;
+            line-height: 1.4;
         }
         .input-group {
             margin-bottom: 20px;
@@ -89,44 +90,53 @@
 
 <div class="card">
     <h2>網拍售價計算器</h2>
-    <div class="formula">公式：成本 + 10元(運費) + 30元(利潤)</div>
+    <div class="formula">
+        公式：(人民幣成本 × 匯率 4.5) <br>+ 10元台幣(運費) + 30元台幣(利潤)
+    </div>
     
     <div class="input-group">
-        <label for="cost">輸入商品成本 ($)</label>
-        <input type="number" id="cost" placeholder="請輸入金額" oninput="calculate()">
+        <label for="cost">輸入商品成本 (¥ 人民幣)</label>
+        <input type="number" id="cost" placeholder="請輸入人民幣金額" oninput="calculate()">
     </div>
     
     <div class="result-box">
         <div class="result-item">
-            <span>商品成本：</span>
-            <span>$ <span id="res-cost">0</span></span>
+            <span>換算台幣成本：</span>
+            <span>NT$ <span id="res-twd-cost">0</span></span>
         </div>
         <div class="result-item">
             <span>國際運費：</span>
-            <span>+ $ 10</span>
+            <span>+ NT$ 10</span>
         </div>
         <div class="result-item">
             <span>預期利潤：</span>
-            <span>+ $ 30</span>
+            <span>+ NT$ 30</span>
         </div>
         <div class="result-item total">
-            <span>👉 建議售價：</span>
-            <span>$ <span id="res-total">40</span></span>
+            <span>👉 建議零售價：</span>
+            <span>NT$ <span id="res-total">40</span></span>
         </div>
     </div>
 </div>
 
 <script>
     function calculate() {
-        const costInput = document.getElementById('cost').value;
-        const cost = parseFloat(costInput) || 0;
+        // 取得輸入的人民幣
+        const rmbCostInput = document.getElementById('cost').value;
+        const rmbCost = parseFloat(rmbCostInput) || 0;
         
-        const shipping = 10;
-        const profit = 30;
-        const total = cost + shipping + profit;
+        // 設定匯率、運費與利潤
+        const exchangeRate = 4.5; // 人民幣換台幣匯率
+        const shipping = 10;     // 台幣運費
+        const profit = 30;       // 台幣利潤
         
-        document.getElementById('res-cost').innerText = cost.toFixed(2);
-        document.getElementById('res-total').innerText = total.toFixed(2);
+        // 計算台幣成本與最終售價
+        const twdCost = rmbCost * exchangeRate;
+        const total = twdCost + shipping + profit;
+        
+        // 渲染到網頁上
+        document.getElementById('res-twd-cost').innerText = twdCost.toFixed(1);
+        document.getElementById('res-total').innerText = Math.ceil(total); // 自動四捨五入/無條件進位到整數
     }
 </script>
 
