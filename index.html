@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>售價計算器 (利潤3%)</title>
+    <title>售價計算器 (利潤20%)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -91,7 +91,7 @@
 <div class="card">
     <h2>網拍售價計算器</h2>
     <div class="formula">
-        公式：(人民幣成本 × 匯率 5.0) <br>+ 3% 預期利潤 + 10元台幣(運費)
+        公式：(人民幣成本 × 匯率 5.0) <br>+ 20% 預期利潤 + 10元台幣(運費)
     </div>
     
     <div class="input-group">
@@ -105,7 +105,7 @@
             <span>NT$ <span id="res-twd-cost">0</span></span>
         </div>
         <div class="result-item">
-            <span>預期利潤 (3%)：</span>
+            <span>預期利潤 (20%)：</span>
             <span>+ NT$ <span id="res-profit">0</span></span>
         </div>
         <div class="result-item">
@@ -121,20 +121,16 @@
 
 <script>
     function calculate() {
-        // 取得輸入的人民幣
         const rmbCostInput = document.getElementById('cost').value;
         const rmbCost = parseFloat(rmbCostInput) || 0;
         
-        // 固定參數
         const exchangeRate = 5.0; 
         const shipping = 10;     
         
-        // 計算各項金額
         const twdCost = rmbCost * exchangeRate;
-        const profit = twdCost * 0.03; // 計算 3% 利潤
+        const profit = twdCost * 0.20; // 調整為 20% 利潤
         const total = twdCost + profit + shipping;
         
-        // 渲染到網頁上
         document.getElementById('res-twd-cost').innerText = twdCost.toFixed(1);
         document.getElementById('res-profit').innerText = profit.toFixed(1);
         document.getElementById('res-total').innerText = Math.ceil(total); // 自動無條件進位到整數
