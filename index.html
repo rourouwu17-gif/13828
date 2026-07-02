@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>售價計算器 (RMB 轉 TWD)</title>
+    <title>售價計算器 (利潤3%)</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -91,7 +91,7 @@
 <div class="card">
     <h2>網拍售價計算器</h2>
     <div class="formula">
-        公式：(人民幣成本 × 匯率 5.0) <br>+ 10元台幣(運費) + 30元台幣(利潤)
+        公式：(人民幣成本 × 匯率 5.0) <br>+ 3% 預期利潤 + 10元台幣(運費)
     </div>
     
     <div class="input-group">
@@ -105,16 +105,16 @@
             <span>NT$ <span id="res-twd-cost">0</span></span>
         </div>
         <div class="result-item">
+            <span>預期利潤 (3%)：</span>
+            <span>+ NT$ <span id="res-profit">0</span></span>
+        </div>
+        <div class="result-item">
             <span>國際運費：</span>
             <span>+ NT$ 10</span>
         </div>
-        <div class="result-item">
-            <span>預期利潤：</span>
-            <span>+ NT$ 30</span>
-        </div>
         <div class="result-item total">
             <span>👉 建議零售價：</span>
-            <span>NT$ <span id="res-total">40</span></span>
+            <span>NT$ <span id="res-total">10</span></span>
         </div>
     </div>
 </div>
@@ -125,17 +125,18 @@
         const rmbCostInput = document.getElementById('cost').value;
         const rmbCost = parseFloat(rmbCostInput) || 0;
         
-        // 設定匯率、運費與利潤
-        const exchangeRate = 5.0; // 匯率改為 5
-        const shipping = 10;     // 台幣運費
-        const profit = 30;       // 台幣利潤
+        // 固定參數
+        const exchangeRate = 5.0; 
+        const shipping = 10;     
         
-        // 計算台幣成本與最終售價
+        // 計算各項金額
         const twdCost = rmbCost * exchangeRate;
-        const total = twdCost + shipping + profit;
+        const profit = twdCost * 0.03; // 計算 3% 利潤
+        const total = twdCost + profit + shipping;
         
         // 渲染到網頁上
         document.getElementById('res-twd-cost').innerText = twdCost.toFixed(1);
+        document.getElementById('res-profit').innerText = profit.toFixed(1);
         document.getElementById('res-total').innerText = Math.ceil(total); // 自動無條件進位到整數
     }
 </script>
