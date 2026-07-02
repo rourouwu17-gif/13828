@@ -91,7 +91,7 @@
 <div class="card">
     <h2>網拍售價計算器</h2>
     <div class="formula">
-        公式：(人民幣成本 × 匯率 4.5) <br>+ 10元台幣(運費) + 30元台幣(利潤)
+        公式：(人民幣成本 × 匯率 5.0) <br>+ 10元台幣(運費) + 30元台幣(利潤)
     </div>
     
     <div class="input-group">
@@ -126,7 +126,7 @@
         const rmbCost = parseFloat(rmbCostInput) || 0;
         
         // 設定匯率、運費與利潤
-        const exchangeRate = 4.5; // 人民幣換台幣匯率
+        const exchangeRate = 5.0; // 匯率改為 5
         const shipping = 10;     // 台幣運費
         const profit = 30;       // 台幣利潤
         
@@ -136,7 +136,7 @@
         
         // 渲染到網頁上
         document.getElementById('res-twd-cost').innerText = twdCost.toFixed(1);
-        document.getElementById('res-total').innerText = Math.ceil(total); // 自動四捨五入/無條件進位到整數
+        document.getElementById('res-total').innerText = Math.ceil(total); // 自動無條件進位到整數
     }
 </script>
 
